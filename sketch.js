@@ -1,20 +1,29 @@
 // Sketch 4 Carter Garcia - Creative Coding
-let img; // Creates our image
-let size = 7 // element size
-let xS = 0 // starting x coordinate
-let xY = 0 // starting y coordinate
+let imgs = [];
+let img;
+let pixelSize;
+let minBlur, maxBlur;
+let state;
+let size;
+let x, y;
 
 function preload() {
-  img = loadImage('virgie.jpg'); // preloads Virginia picture!
+  /*
+  img = loadImage('Carmella.jpg');
+  */
+  imgs[0] = loadImage('Carmella.jpg');
+  imgs[1] = loadImage('Zoe Alone.jpg');
+  imgs[2] = loadImage('Zoe and poppy.jpg');
 }
+
 
 function setup() {
   createCanvas(1024, 1024); // creates canvas
-
-  img.loadPixels(); // loads image
-  img.resize(windowWidth, 0); // resizes image to window size
-  img.updatePixels(); // updates image
-
+  minBlur = 1;
+  maxBlur = 50;
+  state = 0;
+  size = minBlur;
+  imgs[state].loadPixels(); // loads image
 }
 
 
@@ -22,23 +31,29 @@ function draw() {
   clear();
   background(0);
 
-  let size = floor(map(mouseX, 0, width, 7, 40)); // maps mouseX value to element size
+  let size = floor(map(mouseX, 0, width, minBlur, maxBlur)); // maps mouseX value to element size
 
-  for (var starty = 0; starty < img.height; starty++) { // creates pixel index
-    for (var startx = 0; startx < img.width; startx++) {
-      var index = (startx + starty * img.width) * 4;
-      var r = img.pixels[index + 0];
-      var g = img.pixels[index + 1];
-      var b = img.pixels[index + 2];
+  for (let y = 0; y < imgs[state].height; y++) { // creates pixel index
+    for (let x = 0; x < imgs[state].width; x++) {
+      let index = (x + y * imgs[state].width) * 4;
+      let r = imgs[state].pixels[index + 0];
+      let g = imgs[state].pixels[index + 1];
+      let b = imgs[state].pixels[index + 2];
+      fill(r, g, b);
 
-      var bright = ((0.3 * r) + (0.59 * g) + (0.11 * b)); // sets pixel value to adjusted grayscale
+      rect(x, y, size, size);
 
-      fill(bright); // fills element with adjusted grayscale
-
-      rect(startx, starty, size, size);
-
-      startx = startx + size -1 // set new startx value
+      x = x + size -1; // set new startx value
     }
-    starty = starty + size -1 // set new starty value
+    y = y + size -1; // set new starty value
   }
+}
+
+function mouseReleased() {
+  if (state < 2) {
+    state++;
+  } else {
+    state = 0;
+  }
+  imgs[state].loadPixels();
 }
