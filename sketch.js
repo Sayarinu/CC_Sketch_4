@@ -1,4 +1,18 @@
 // Sketch 4 Carter Garcia - Creative Coding
+/*
+Must include:
+  Manipulation of time *DONE*
+  Animation
+  Movement
+  Images *DONE*
+  Play with:
+    Location
+    color
+    pixels *DONE*
+    presence
+    absence
+*/
+
 let imgs = [];
 let img;
 let pixelSize;
@@ -6,6 +20,7 @@ let minBlur, maxBlur;
 let state;
 let size;
 let x, y;
+let yOffset;
 
 function preload() {
   /*
@@ -57,3 +72,11 @@ function mouseReleased() {
   }
   imgs[state].loadPixels();
 }
+
+/*
+function keyPressed() {
+  if (keyCode == Q) {
+    tint(random(255), random(255), random(255), random(255));
+  }
+}
+*/
