@@ -18,7 +18,7 @@ let img;
 let pixelSize;
 let minBlur, maxBlur;
 let state;
-let size;
+let largeness;
 let x, y;
 let yOffset;
 
@@ -37,7 +37,7 @@ function setup() {
   minBlur = 1;
   maxBlur = 50;
   state = 0;
-  size = minBlur;
+  largeness = minBlur;
   imgs[state].loadPixels(); // loads image
 }
 
@@ -46,7 +46,7 @@ function draw() {
   clear();
   background(0);
 
-  let size = floor(map(mouseX, 0, width, minBlur, maxBlur)); // maps mouseX value to element size
+  let largeness = floor(map(mouseX, 0, width, minBlur, maxBlur)); // maps mouseX value to element size
 
   for (let y = 0; y < imgs[state].height; y++) { // creates pixel index
     for (let x = 0; x < imgs[state].width; x++) {
@@ -56,11 +56,11 @@ function draw() {
       let b = imgs[state].pixels[index + 2];
       fill(r, g, b);
 
-      rect(x, y, size, size);
+      rect(x, y, largeness, largeness);
 
-      x = x + size -1; // set new startx value
+      x = x + largeness -1; // set new startx value
     }
-    y = y + size -1; // set new starty value
+    y = y + largeness -1; // set new starty value
   }
 }
 
